@@ -1,0 +1,23 @@
+{
+    "name": "deep-clone",
+    "version": "1.0.0",
+    "description": "deep clone an object",
+    "main": "",
+    "type": "module",
+    "scripts": {
+        "test": "mocha"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/liha66/deep-clone.git"
+    },
+    "author": "H.a Li",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/liha66/deep-clone/issues"
+    },
+    "homepage": "https://github.com/liha66/deep-clone#readme",
+    "devDependencies": {
+        "mocha": "^10.1.0"
+    }
+}

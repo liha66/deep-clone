@@ -1,0 +1,1 @@
+export const isObject = object => typeof object === 'object' && object !== null
