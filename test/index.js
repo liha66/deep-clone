@@ -17,3 +17,11 @@ it("deep clone an ordinary object with null property", function () {
     assert.notEqual(x, y)
     assert.equal(JSON.stringify(x), JSON.stringify(y))
 })
+// v1  RangeError: Maximum call stack size exceeded
+it("deep clone an ordinary object with circular reference", function () {
+    let x = {a: 1}
+    x.b = x
+    let y = deepClone(x)
+    assert.notEqual(x, y)
+    assert.equal(y, y.b)
+})
