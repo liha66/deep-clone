@@ -25,3 +25,13 @@ it("deep clone an ordinary object with circular reference", function () {
     assert.notEqual(x, y)
     assert.equal(y, y.b)
 })
+it("deep clone an ordinary object with prototype", function () {
+    let x = {a: 1}
+    Object.setPrototypeOf(x, {b: 2})
+    let y = deepClone(x)
+    assert.equal(x.b, y.b)
+    for (let prop of Object.getOwnPropertyNames(y)) {
+        if (prop === 'b')
+            assert(false)
+    }
+})
