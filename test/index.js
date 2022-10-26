@@ -30,8 +30,17 @@ it("deep clone an ordinary object with prototype", function () {
     Object.setPrototypeOf(x, {b: 2})
     let y = deepClone(x)
     assert.equal(x.b, y.b)
-    for (let prop of Object.getOwnPropertyNames(y)) {
-        if (prop === 'b')
-            assert(false)
-    }
+    assert(!y.hasOwnProperty("b"))
+})
+it("deep clone an ordinary object with non-enumerable property", function () {
+    const x = {}
+    Object.defineProperty(x, "a", {
+        value: 1,
+        writable: true,
+        enumerable: false,
+        configurable: false
+    })
+    let y = deepClone(x)
+    assert.notEqual(x, y)
+    assert(!y.propertyIsEnumerable("a"))
 })
