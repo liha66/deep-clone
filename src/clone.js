@@ -34,7 +34,13 @@ export const deepClone = source => {
                 Object.defineProperty(target, property, descriptor)
             }
         }
+        if (Object.isFrozen(source)) {
+            Object.freeze(target)
+        } else if (Object.isSealed(source)) {
+            Object.seal(target)
+        } else if (!Object.isExtensible(source)) {
+            Object.preventExtensions(target)
+        }
     }
-    
     return target
 }

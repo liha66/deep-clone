@@ -44,3 +44,20 @@ it("deep clone an ordinary object with non-enumerable property", function () {
     assert.notEqual(x, y)
     assert(!y.propertyIsEnumerable("a"))
 })
+it("deep clone an ordinary object with status", function () {
+    // frozen
+    const x = Object.freeze({a: 1})
+    const y = deepClone(x)
+    assert(Object.isFrozen(y))
+    assert.equal(x.a, y.a)
+    // sealed
+    const p = Object.seal({a: 1})
+    const q = deepClone(p)
+    assert(Object.isSealed(q))
+    assert(p.a, q.a)
+    // non-extensible
+    const i = Object.preventExtensions({a: 1})
+    const j = deepClone(i)
+    assert(!Object.isExtensible(j))
+    assert.equal(i.a, j.a)
+})
