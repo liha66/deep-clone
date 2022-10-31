@@ -1,10 +1,11 @@
 import { isObject } from "./util.js"
+import { createObjectFromSameClass } from "./create.js"
 
 export const deepClone = source => {
     if (!isObject(source)) {
         throw Error(`${source} is not object`)
     }
-    let target = Object.create(Object.getPrototypeOf(source))
+    let target = createObjectFromSameClass(source)
     let map = new Map
     map.set(source, target)
     let stack = [{source, target}]
@@ -15,10 +16,9 @@ export const deepClone = source => {
             if (descriptor.hasOwnProperty("value")) { // data property
                 if (isObject(source[property])) {
                     if (map.has(source[property])) {
-                        // target[property] = map.get(source[property])
                         descriptor.value = map.get(source[property])
                     } else {
-                        descriptor.value = Object.create(Object.getPrototypeOf(source[property]))
+                        descriptor.value = createObjectFromSameClass(source[property])
                         stack.push({
                             source: source[property],
                             target: descriptor.value
@@ -26,7 +26,6 @@ export const deepClone = source => {
                         map.set(source[property], descriptor.value)
                     }
                 } else {
-                    // target[property] = source[property]
                     descriptor.value = source[property]
                 }
                 Object.defineProperty(target, property, descriptor)
